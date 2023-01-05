@@ -1,0 +1,80 @@
+
+select * from tbl_employee
+
+ --1. Select employees first name, last name, job_id and salary whose first name starts with alphabet P
+             select first_name,last_name,job_id,salary from tbl_employee where first_name like 'P%'
+
+ -- 2. Write a query to select employee with the highest salary
+             select top 1(salary) from tbl_employee order by salary  desc
+
+ --3. Select employee with the second highest salary
+             SELECT MAX(SALARY) FROM tbl_employee WHERE SALARY < (SELECT MAX(SALARY) FROM tbl_employee)
+
+ --4. Fetch employees with 2nd or 3rd highest salary
+    select salary from tbl_employee order by  salary desc offset 1 row FETCH NEXT 2 ROWS ONLY
+
+
+ --5. Write a query to select employees and their corresponding managers and their salaries
+        select salary as Employe_Salary, manager_id from tbl_employee where manager_id is NOt Null order by salary desc
+
+
+ --6. Write a query to show count of employees under each manager in descending order
+             SELECT sup.employee_id, COUNT (sub.employee_id) AS number_of_employees FROM tbl_employee sub JOIN tbl_employee sup ON
+             sub.manager_id = sup.employee_id GROUP BY sup.employee_id, sup.first_name, sup.last_name;
+
+
+ -- 7. Find the count of employees in each department
+    SELECT dept.department_name, COUNT(emp.department_id) AS count FROM tbl_department dept LEFT OUTER JOIN
+tbl_employee emp ON emp.department_id = dept.department_id GROUP BY dept.department_name;
+
+
+ -- 8. Get the count of employees hired year wise
+             Select COUNT(hire_date) from tbl_employee
+
+ --9. Find the salary range of employees
+             select Salary from tbl_employee range order by salary desc
+
+--10. Write a query to divide people into three groups based on their salaries
+
+
+--11. Select the employees whose first_name contains “an”
+             select first_name from tbl_employee where first_name like '%an%'
+
+--12. Select employee first name and the corresponding phone number in theformat (_ _ _)-(_ _ _)-(_ _ _ _)
+
+--13. Find the employees who joined in August, 2022.
+             select employee_id as Employee from tbl_employee where hire_date<('2022-8-1')
+
+--14. Write an SQL query to display employees who earn more than the average salary in that company
+             SELECT employee_id, first_name,last_name FROM tbl_employee WHERE salary >( SELECT AVG(salary)  FROM tbl_employee )
+             order by salary desc;
+
+
+--15. Find the maximum salary from each department.
+             select min(salary) from tbl_employe inner join tbl_department on tbl_employe.employee_id=tbl_department.department_id
+
+
+--16. Write a SQL query to display the 5 least earning employees
+             select top 5 Salary as MinimunSalary from tbl_employee order by salary asc
+
+
+--17. Find the employees hired in the 2018 - 2021
+              select * from tbl_employe where YEAR(hire_date) between 2018 and 2021
+
+--18. Display the employees first name and the name in reverse order
+
+
+--19. Find the employees who joined the company after 15th of the month
+
+--20. Display the managers and the reporting employees who work in different departments
+
+
+create procedure Department
+@department_id int,
+@department_name nvarchar(max),
+@location_id int
+as
+begin
+insert into tbl_department(department_id,department_name,location_id)values(@department_id,@department_name,@location_id)
+end
+go
